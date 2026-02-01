@@ -60,7 +60,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/maker"
-                className="btn-secondary border-white text-white hover:bg-white/10"
+                className="inline-flex items-center justify-center px-6 py-3 font-medium rounded-lg border-2 border-white text-white hover:bg-white hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-700 transition-colors"
               >
                 Create Your Own
               </Link>
