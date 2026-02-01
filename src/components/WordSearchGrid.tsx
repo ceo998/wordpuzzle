@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { PuzzleGrid, WordPlacement } from '@/types';
+import { PuzzleGrid } from '@/types';
 import { checkWord, getWordCells } from '@/lib/puzzle-generator';
 import { cn } from '@/lib/utils';
 
@@ -56,7 +56,7 @@ export default function WordSearchGrid({
       const absCol = Math.abs(colDiff);
 
       if (absRow !== 0 && absCol !== 0 && absRow !== absCol) {
-        // Not a valid selection direction
+        // Not a valid selection direction - return just the start cell
         return [start];
       }
 
@@ -77,7 +77,8 @@ export default function WordSearchGrid({
   );
 
   // Handle mouse/touch start
-  const handleStart = useCallback((row: number, col: number) => {
+  const handleStart = useCallback((row: number, col: number, e?: React.MouseEvent | React.TouchEvent) => {
+    e?.preventDefault();
     setIsSelecting(true);
     setStartCell({ row, col });
     setEndCell({ row, col });
@@ -90,7 +91,8 @@ export default function WordSearchGrid({
       if (!isSelecting || !startCell) return;
 
       setEndCell({ row, col });
-      setSelectedCells(calculateSelectedCells(startCell, { row, col }));
+      const newSelectedCells = calculateSelectedCells(startCell, { row, col });
+      setSelectedCells(newSelectedCells);
     },
     [isSelecting, startCell, calculateSelectedCells]
   );
@@ -129,6 +131,7 @@ export default function WordSearchGrid({
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
       if (!isSelecting || !gridRef.current) return;
+      e.preventDefault();
 
       const touch = e.touches[0];
       const gridRect = gridRef.current.getBoundingClientRect();
@@ -144,56 +147,79 @@ export default function WordSearchGrid({
     [isSelecting, grid.length, handleMove]
   );
 
-  const isSelected = (row: number, col: number) =>
-    selectedCells.some((cell) => cell.row === row && cell.col === col);
+  const isSelected = useCallback((row: number, col: number) =>
+    selectedCells.some((cell) => cell.row === row && cell.col === col),
+    [selectedCells]
+  );
 
-  const isFound = (row: number, col: number) =>
-    foundCells.has(`${row}-${col}`);
+  const isFound = useCallback((row: number, col: number) =>
+    foundCells.has(`${row}-${col}`),
+    [foundCells]
+  );
 
-  const isAnswer = (row: number, col: number) => {
+  const isAnswer = useCallback((row: number, col: number) => {
     if (!showAnswers) return false;
     return wordPlacements.some((placement) => {
       const cells = getWordCells(placement);
       return cells.some((cell) => cell.row === row && cell.col === col);
     });
-  };
+  }, [showAnswers, wordPlacements]);
 
   return (
     <div
       ref={gridRef}
       className="select-none touch-none"
       onMouseLeave={handleEnd}
+      onMouseUp={handleEnd}
       onTouchEnd={handleEnd}
       onTouchMove={handleTouchMove}
     >
       <div
-        className="grid gap-0.5 bg-gray-200 p-1 rounded-lg"
+        className="grid gap-1 bg-gray-300 p-2 rounded-xl shadow-inner"
         style={{
           gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
         }}
       >
         {grid.map((row, rowIndex) =>
-          row.map((letter, colIndex) => (
-            <button
-              key={`${rowIndex}-${colIndex}`}
-              className={cn(
-                'aspect-square flex items-center justify-center text-sm sm:text-base md:text-lg font-bold rounded transition-colors min-w-[44px] min-h-[44px]',
-                'bg-white hover:bg-gray-50 text-gray-900',
-                isSelected(rowIndex, colIndex) && 'bg-primary-200 text-primary-900',
-                isFound(rowIndex, colIndex) && 'bg-green-200 text-green-900',
-                showAnswers && isAnswer(rowIndex, colIndex) && !isFound(rowIndex, colIndex) && 'bg-yellow-100 text-yellow-900'
-              )}
-              onMouseDown={() => handleStart(rowIndex, colIndex)}
-              onMouseEnter={() => handleMove(rowIndex, colIndex)}
-              onMouseUp={handleEnd}
-              onTouchStart={() => handleStart(rowIndex, colIndex)}
-              aria-label={`Letter ${letter} at row ${rowIndex + 1}, column ${colIndex + 1}`}
-            >
-              {letter}
-            </button>
-          ))
+          row.map((letter, colIndex) => {
+            const selected = isSelected(rowIndex, colIndex);
+            const found = isFound(rowIndex, colIndex);
+            const answer = isAnswer(rowIndex, colIndex);
+
+            return (
+              <button
+                key={`${rowIndex}-${colIndex}`}
+                className={cn(
+                  'aspect-square flex items-center justify-center text-sm sm:text-base md:text-lg font-bold rounded-md transition-all duration-150 min-w-[28px] min-h-[28px] sm:min-w-[36px] sm:min-h-[36px] md:min-w-[44px] md:min-h-[44px]',
+                  'bg-white text-gray-900 shadow-sm',
+                  'hover:bg-gray-100',
+                  // Selection highlighting - most prominent
+                  selected && !found && 'bg-blue-500 text-white shadow-lg scale-105 ring-2 ring-blue-300',
+                  // Found words - green background
+                  found && 'bg-green-500 text-white shadow-md',
+                  // Show answers - yellow highlight
+                  showAnswers && answer && !found && !selected && 'bg-yellow-200 text-yellow-900'
+                )}
+                onMouseDown={(e) => handleStart(rowIndex, colIndex, e)}
+                onMouseEnter={() => handleMove(rowIndex, colIndex)}
+                onTouchStart={(e) => handleStart(rowIndex, colIndex, e)}
+                aria-label={`Letter ${letter} at row ${rowIndex + 1}, column ${colIndex + 1}${selected ? ', selected' : ''}${found ? ', found' : ''}`}
+              >
+                {letter}
+              </button>
+            );
+          })
         )}
       </div>
+
+      {/* Selection indicator */}
+      {isSelecting && selectedCells.length > 0 && (
+        <div className="mt-3 text-center text-sm text-gray-600">
+          Selected: <span className="font-bold text-blue-600">
+            {selectedCells.map(cell => grid[cell.row][cell.col]).join('')}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
