@@ -94,10 +94,10 @@ export default function HangmanGame() {
             <button
               key={cat}
               onClick={() => handleCategoryChange(cat)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors capitalize ${
+              className={`px-4 py-3 min-h-[44px] rounded-lg text-sm font-medium transition-colors capitalize ${
                 category === cat
                   ? 'bg-primary-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
               }`}
             >
               {cat}
@@ -208,12 +208,12 @@ export default function HangmanGame() {
                 key={letter}
                 onClick={() => handleGuess(letter)}
                 disabled={isGuessed}
-                className={`w-10 h-10 rounded-lg font-bold transition-colors ${
+                className={`min-w-[44px] min-h-[44px] w-11 h-11 rounded-lg font-bold transition-colors ${
                   isCorrect
-                    ? 'bg-green-500 text-white cursor-not-allowed'
+                    ? 'bg-green-600 text-white cursor-not-allowed'
                     : isWrong
-                    ? 'bg-red-500 text-white cursor-not-allowed'
-                    : 'bg-gray-100 text-gray-900 hover:bg-primary-100 hover:text-primary-700'
+                    ? 'bg-red-600 text-white cursor-not-allowed'
+                    : 'bg-gray-100 text-gray-900 hover:bg-primary-100 hover:text-primary-800'
                 }`}
                 aria-label={`Guess letter ${letter}`}
               >

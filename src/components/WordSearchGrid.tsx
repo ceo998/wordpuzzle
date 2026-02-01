@@ -177,11 +177,11 @@ export default function WordSearchGrid({
             <button
               key={`${rowIndex}-${colIndex}`}
               className={cn(
-                'aspect-square flex items-center justify-center text-sm sm:text-base md:text-lg font-bold rounded transition-colors',
-                'bg-white hover:bg-gray-50',
-                isSelected(rowIndex, colIndex) && 'bg-primary-200',
-                isFound(rowIndex, colIndex) && 'bg-green-200 text-green-800',
-                showAnswers && isAnswer(rowIndex, colIndex) && !isFound(rowIndex, colIndex) && 'bg-yellow-100'
+                'aspect-square flex items-center justify-center text-sm sm:text-base md:text-lg font-bold rounded transition-colors min-w-[44px] min-h-[44px]',
+                'bg-white hover:bg-gray-50 text-gray-900',
+                isSelected(rowIndex, colIndex) && 'bg-primary-200 text-primary-900',
+                isFound(rowIndex, colIndex) && 'bg-green-200 text-green-900',
+                showAnswers && isAnswer(rowIndex, colIndex) && !isFound(rowIndex, colIndex) && 'bg-yellow-100 text-yellow-900'
               )}
               onMouseDown={() => handleStart(rowIndex, colIndex)}
               onMouseEnter={() => handleMove(rowIndex, colIndex)}

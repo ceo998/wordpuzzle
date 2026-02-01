@@ -47,7 +47,7 @@ export default function HomePage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance">
               Free Word Search Puzzles
             </h1>
-            <p className="text-lg md:text-xl text-primary-100 mb-8 text-balance">
+            <p className="text-lg md:text-xl text-white/90 mb-8 text-balance">
               Play thousands of word search puzzles online for free. Perfect for
               all ages - from kids to adults. Print them out or play digitally!
             </p>
@@ -70,16 +70,18 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="py-12 bg-white border-b">
+      <section className="py-12 bg-white border-b" aria-labelledby="features-heading">
         <div className="container-wide">
+          <h2 id="features-heading" className="sr-only">Why Choose WordPuzzle</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
-                  className="w-6 h-6 text-primary-600"
+                  className="w-7 h-7 text-primary-700"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -89,18 +91,19 @@ export default function HomePage() {
                   />
                 </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">100% Free</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">100% Free</h3>
+              <p className="text-gray-700">
                 All puzzles are completely free to play and print. No sign-up required.
               </p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
-                  className="w-6 h-6 text-primary-600"
+                  className="w-7 h-7 text-primary-700"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -110,18 +113,19 @@ export default function HomePage() {
                   />
                 </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Play Anywhere</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Play Anywhere</h3>
+              <p className="text-gray-700">
                 Works on desktop, tablet, and mobile. Play online or print for offline.
               </p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-14 h-14 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
-                  className="w-6 h-6 text-primary-600"
+                  className="w-7 h-7 text-primary-700"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -131,8 +135,8 @@ export default function HomePage() {
                   />
                 </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-2">Educational</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Educational</h3>
+              <p className="text-gray-700">
                 Perfect for teachers and parents. Improve vocabulary and spelling.
               </p>
             </div>

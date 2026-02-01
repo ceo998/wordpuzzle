@@ -64,7 +64,7 @@ export default function Pagination({
           {currentPage > 1 ? (
             <Link
               href={getPageUrl(currentPage - 1)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-colors text-gray-700"
               aria-label="Previous page"
             >
               <svg
@@ -72,6 +72,7 @@ export default function Pagination({
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -82,12 +83,13 @@ export default function Pagination({
               </svg>
             </Link>
           ) : (
-            <span className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed">
+            <span className="flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-lg border border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed" aria-disabled="true">
               <svg
                 className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -104,17 +106,17 @@ export default function Pagination({
         {getPageNumbers().map((page, index) => (
           <li key={index}>
             {page === '...' ? (
-              <span className="flex items-center justify-center w-10 h-10 text-gray-500">
+              <span className="flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 text-gray-600">
                 ...
               </span>
             ) : (
               <Link
                 href={getPageUrl(page as number)}
                 className={cn(
-                  'flex items-center justify-center w-10 h-10 rounded-lg border transition-colors font-medium',
+                  'flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-lg border transition-colors font-medium',
                   page === currentPage
                     ? 'bg-primary-600 border-primary-600 text-white'
-                    : 'border-gray-300 bg-white hover:bg-gray-50 text-gray-700'
+                    : 'border-gray-300 bg-white hover:bg-gray-50 text-gray-800'
                 )}
                 aria-current={page === currentPage ? 'page' : undefined}
               >
@@ -129,7 +131,7 @@ export default function Pagination({
           {currentPage < totalPages ? (
             <Link
               href={getPageUrl(currentPage + 1)}
-              className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-colors text-gray-700"
               aria-label="Next page"
             >
               <svg
@@ -137,6 +139,7 @@ export default function Pagination({
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -147,12 +150,13 @@ export default function Pagination({
               </svg>
             </Link>
           ) : (
-            <span className="flex items-center justify-center w-10 h-10 rounded-lg border border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed">
+            <span className="flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-lg border border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed" aria-disabled="true">
               <svg
                 className="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"

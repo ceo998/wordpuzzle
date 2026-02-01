@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:thewordsearch.com)",
+      "Bash(npx create-next-app:*)",
+      "Bash(export:*)",
+      "Bash([ -s \"$NVM_DIR/nvm.sh\" ])",
+      "Bash(. \"$NVM_DIR/nvm.sh\")",
+      "Bash(source ~/.zshrc)",
+      "Bash(source ~/.bashrc)",
+      "Bash(mdfind:*)"
+    ]
+  }
+}
