@@ -89,21 +89,36 @@ export default async function CategoryPage({
         />
 
         {/* Category Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            {category.icon && (
-              <span className="text-4xl" role="img" aria-label={category.name}>
-                {category.icon}
-              </span>
-            )}
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-              {category.name} Word Search Puzzles
-            </h1>
+        <div className="mb-10 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary-500/10 to-accent-500/10 rounded-full blur-3xl -z-10" />
+
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100/50 p-6 md:p-8 shadow-lg">
+            <div className="flex items-center gap-4 mb-4">
+              {category.icon && (
+                <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-accent-100 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-500/10">
+                  <span className="text-4xl" role="img" aria-label={category.name}>
+                    {category.icon}
+                  </span>
+                </div>
+              )}
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-primary-800 to-gray-900 bg-clip-text text-transparent">
+                  {category.name} Word Search Puzzles
+                </h1>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
+                    <span className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-pulse" />
+                    {category.puzzleCount}+ Puzzles
+                  </span>
+                </div>
+              </div>
+            </div>
+            <p className="text-gray-600 max-w-3xl text-lg">
+              {category.description}. Browse our collection of {category.puzzleCount}+
+              puzzles. Play online or print them for offline enjoyment!
+            </p>
           </div>
-          <p className="text-gray-600 max-w-3xl">
-            {category.description}. Browse our collection of {category.puzzleCount}+
-            puzzles. Play online or print them for offline enjoyment!
-          </p>
         </div>
 
         {/* Puzzles Grid */}
@@ -148,28 +163,32 @@ export default async function CategoryPage({
         )}
 
         {/* Category Stats */}
-        <div className="mt-12 p-6 bg-primary-50 rounded-xl">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            About {category.name} Puzzles
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary-600">
-                {category.puzzleCount}+
-              </div>
-              <div className="text-sm text-gray-600">Total Puzzles</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary-600">Free</div>
-              <div className="text-sm text-gray-600">Always Free</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary-600">Yes</div>
-              <div className="text-sm text-gray-600">Printable</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary-600">All</div>
-              <div className="text-sm text-gray-600">Skill Levels</div>
+        <div className="mt-12 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-white to-accent-500/5 rounded-2xl" />
+          <div className="relative p-8 rounded-2xl border border-primary-100/50">
+            <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+              <span className="w-8 h-8 bg-gradient-to-br from-primary-500 to-accent-500 rounded-lg flex items-center justify-center shadow-lg shadow-primary-500/25">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </span>
+              About {category.name} Puzzles
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { value: `${category.puzzleCount}+`, label: 'Total Puzzles', icon: '🧩' },
+                { value: 'Free', label: 'Always Free', icon: '🎁' },
+                { value: 'Yes', label: 'Printable', icon: '🖨️' },
+                { value: 'All', label: 'Skill Levels', icon: '📊' },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center p-4 bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-100/50 hover:shadow-md transition-shadow">
+                  <div className="text-2xl mb-2">{stat.icon}</div>
+                  <div className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

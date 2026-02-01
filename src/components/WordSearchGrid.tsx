@@ -175,7 +175,7 @@ export default function WordSearchGrid({
       onTouchMove={handleTouchMove}
     >
       <div
-        className="grid gap-1 bg-gray-300 p-2 rounded-xl shadow-inner"
+        className="grid gap-1.5 bg-gradient-to-br from-primary-100 via-white to-accent-100 p-3 sm:p-4 rounded-2xl shadow-inner"
         style={{
           gridTemplateColumns: `repeat(${grid.length}, minmax(0, 1fr))`,
         }}
@@ -190,15 +190,15 @@ export default function WordSearchGrid({
               <button
                 key={`${rowIndex}-${colIndex}`}
                 className={cn(
-                  'aspect-square flex items-center justify-center text-sm sm:text-base md:text-lg font-bold rounded-md transition-all duration-150 min-w-[28px] min-h-[28px] sm:min-w-[36px] sm:min-h-[36px] md:min-w-[44px] md:min-h-[44px]',
-                  'bg-white text-gray-900 shadow-sm',
-                  'hover:bg-gray-100',
-                  // Selection highlighting - most prominent
-                  selected && !found && 'bg-blue-500 text-white shadow-lg scale-105 ring-2 ring-blue-300',
-                  // Found words - green background
-                  found && 'bg-green-500 text-white shadow-md',
-                  // Show answers - yellow highlight
-                  showAnswers && answer && !found && !selected && 'bg-yellow-200 text-yellow-900'
+                  'aspect-square flex items-center justify-center text-sm sm:text-base md:text-lg font-bold rounded-xl transition-all duration-200 min-w-[28px] min-h-[28px] sm:min-w-[36px] sm:min-h-[36px] md:min-w-[44px] md:min-h-[44px]',
+                  'bg-white text-gray-800 shadow-sm border border-gray-100',
+                  'hover:bg-primary-50 hover:border-primary-200 hover:scale-105',
+                  // Selection highlighting - most prominent with gradient
+                  selected && !found && 'bg-gradient-to-br from-blue-500 to-primary-600 text-white shadow-xl scale-110 ring-2 ring-blue-300 ring-offset-1 border-transparent',
+                  // Found words - green gradient background
+                  found && 'bg-gradient-to-br from-emerald-400 to-green-500 text-white shadow-lg border-transparent',
+                  // Show answers - accent highlight
+                  showAnswers && answer && !found && !selected && 'bg-gradient-to-br from-amber-100 to-yellow-200 text-amber-900 border-amber-200'
                 )}
                 onMouseDown={(e) => handleStart(rowIndex, colIndex, e)}
                 onMouseEnter={() => handleMove(rowIndex, colIndex)}
@@ -214,10 +214,15 @@ export default function WordSearchGrid({
 
       {/* Selection indicator */}
       {isSelecting && selectedCells.length > 0 && (
-        <div className="mt-3 text-center text-sm text-gray-600">
-          Selected: <span className="font-bold text-blue-600">
-            {selectedCells.map(cell => grid[cell.row][cell.col]).join('')}
-          </span>
+        <div className="mt-4 text-center">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-primary-600 text-white px-4 py-2 rounded-full shadow-lg animate-pulse">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+            <span className="font-bold tracking-wider">
+              {selectedCells.map(cell => grid[cell.row][cell.col]).join('')}
+            </span>
+          </div>
         </div>
       )}
     </div>
